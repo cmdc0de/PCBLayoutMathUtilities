@@ -3,6 +3,10 @@
 #include <iostream>
 #include <unistd.h>
 
+double Convert(double radian) {
+    double pi = 3.14159;
+    return(radian * (180 / pi));
+}
 
 //static const int NUM_ITEMS = 24;
 //static const float_t RADIUS_OF_CIRCLE = 295.0f/2.0f;
@@ -29,23 +33,16 @@ int main(int argc, char *argv[]) {
     std::cerr << "wrong params, muyst have -n and -d or -r" << std::endl;
     return -1;
   }
-    float px,py;
+    float px,py,lastx,lasty;
+    float angle = 0.0f;
     for(int i=0;i<NumItems;++i) {
         px = StartingX + RadiusOfCircle * std::cos(2*3.14*i/NumItems);
         py = StartingY + RadiusOfCircle * std::sin(2*3.14*i/NumItems);
-        std::cout << i << "      "<< px << "     " << py << std::endl;
+        if (i>0) {
+          angle = static_cast<float> (Convert(std::atan2(py,px)));
+        } 
+        std::cout << i << "      "<< px << "     " << py << "     " << angle << std::endl;
+        lastx = px;
+        lasty = py;
     }
-    /*
-    float r = RADIUS_OF_CIRCLE;
-    float s = (2*3.14*r)/NUM_ITEMS;
-    float angle = s/r;
-    float currentAngle = 0;
-    float px,py;
-    for(int i=0;i<NUM_ITEMS;i++) {
-        px = r*cos(currentAngle)+34.315;
-        py = r*sin(currentAngle)+66.007;
-        std::cout << px << "     " << py << std::endl;
-        currentAngle = currentAngle + angle;
-    }
-     */
 }
